@@ -1,0 +1,26 @@
+{
+  "name": "projeto-sistemas-2-servidor",
+  "version": "1.0.0",
+  "description": "API Restful para o app Find my Toilet",
+  "main": "index.js",
+  "engines": {
+    "node": "6.7.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ricardofagodoy/projeto-sistemas-2-servidor.git"
+  },
+  "author": "Ricardo Godoy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ricardofagodoy/projeto-sistemas-2-servidor/issues"
+  },
+  "homepage": "https://github.com/ricardofagodoy/projeto-sistemas-2-servidor#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  }
+}
