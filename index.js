@@ -4,6 +4,8 @@ let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
 
+let logger = require('./logger');
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 
@@ -12,13 +14,13 @@ let router = express.Router();
 
 // Log all incoming requests
 router.use((req, res, next) => {
-  console.log('%s: %s', req.method, req.url);
+  logger.info('%s: %s', req.method, req.url);
   next();
 });
 
 // Responds on / with current time
 router.get('/', function(req, res) {
-    res.json({ message: new Date().getTime() });
+    res.end(new Date().getTime().toString());
 });
 
 // Register routes for locality model
@@ -27,4 +29,4 @@ require('./routes/locality')(router);
 // Base path is /
 app.use('/', router);
 
-app.listen(port, () => console.log('Listening on port %s', port));
+app.listen(port, () => logger.info('Listening on port %s', port));

@@ -1,6 +1,7 @@
 'use strict'
 
 let db = require('../persistence/localityPersistence');
+let logger = require('../logger');
 
 module.exports = {
 
@@ -8,11 +9,15 @@ module.exports = {
 
         db.view('locality/toilet', (err, toilet) => {
 
-            console.log('Toilet: %j', toilet);
+            logger.info({'Toilet': toilet});
 
             db.view('locality/water', (err, water) => {
 
-                console.log('Water: %j', water);
+                logger.info({'Water': water});
+
+                // Initialize if undefined
+                if (toilet === undefined || water === undefined)
+                  toilet = water = [];
 
                 callback({
                     toilet: toilet.map((obj) => obj),
@@ -25,21 +30,23 @@ module.exports = {
 
     create: function(locality, callback) {
 
+        // Validate fields before saving
+        if (locality == undefined || !locality.lat || !locality.lng) {
+            logger.error('Missing fields to create new locality', locality);
+            return callback(false);
+        }
+
         db.save(locality, (err, res) => {
-
-            console.log('Create locality response: %s Errors: %s', res, err);
-
-            callback(res.ok);
+            logger.info('Create locality - response:', res, 'error:', err);
+            callback(!err ? true : false);
         });
     },
 
     update: function(id, locality, callback) {
 
         db.merge(id, locality, (err, res) => {
-
-            console.log('Update locality response: %s Errors: %s', res, err);
-
-            callback(res.ok);
+            logger.info('Create locality - response:', res, 'error:', err);
+            callback(!err ? true : false);
         });
     }
 };

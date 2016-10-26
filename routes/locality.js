@@ -3,6 +3,7 @@
 let DEFAULT_PATH = '/locality';
 let SPECIFIC_PATH = '/locality/:id';
 
+let logger = require('../logger');
 let localityService = require('../services/localityService');
 
 module.exports = function(router) {
@@ -11,16 +12,21 @@ module.exports = function(router) {
 
     // [POST] Create new locality
     .post((req, res) => {
-        console.log('Create new locality: %j', req.body);
+        logger.info('Create new locality:', req.body);
 
         localityService.create(req.body, function(result) {
+
+            // Result FALSE, return error code
+            if (!result)
+                res.status(400);
+
             res.json(result);
         });
     })
 
     // [GET] Retrieve all localities
     .get((req, res) => {
-        console.log('Retrieve all localities');
+        logger.info('Retrieve all localities');
 
         localityService.getAll(function(result) {
             res.json(result);
@@ -32,9 +38,14 @@ module.exports = function(router) {
 
     // [PUT + id] Update specific locality
     .put((req, res) => {
-        console.log('Update locality %s: %j', req.params.id, req.body);
+        logger.info('Update locality id:', req.params.id, 'body:', req.body);
 
         localityService.update(req.params.id, req.body, function(result) {
+
+            // Result FALSE, return error code
+            if (!result)
+                res.status(400);
+
             res.json(result);
         });
     })
