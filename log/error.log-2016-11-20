@@ -1,0 +1,4 @@
+2:41:04 AM - error: Database error: Error: connect ECONNREFUSED 127.0.0.1:5984
+3:29:58 AM - error: Missing fields to create new locality rating=0, baby=true, paid=false, sex=FEMALE, wheel=true, latitude=-22.83295457574962, longitude=-47.051570042967796, _id=null
+3:33:04 AM - error: Missing fields to create new locality rating=0, baby=true, paid=true, sex=UNISEX, wheel=false, latitude=-22.833281810515484, longitude=-47.05164346843958, _id=null
+4:12:26 AM - error: Locality not found with id: 123

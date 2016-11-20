@@ -8,6 +8,9 @@ let localityService = require('../services/localityService');
 
 module.exports = function(router) {
 
+    require('./locality-rating')(router);
+    require('./locality-report')(router);
+
     router.route(DEFAULT_PATH)
 
     // [POST] Create new locality

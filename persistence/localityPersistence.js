@@ -9,27 +9,15 @@ let designs = {
     views: {
         toilet: {
             map: function(doc) {
+
                 if (doc.sex !== undefined)
-                    emit(doc._id, {
-                        id: doc._id,
-                        lat: doc.lat,
-                        lng: doc.lng,
-                        sex: doc.sex,
-                        paid: doc.paid,
-                        baby: doc.baby,
-                        wheel: doc.wheel
-                    });
+                    emit(doc._id, doc);
             }
         },
         water: {
             map: function(doc) {
                 if (doc.sex === undefined)
-                    emit(doc._id, {
-                        id: doc._id,
-                        lat: doc.lat,
-                        lng: doc.lng,
-                        cold: doc.cold
-                    });
+                    emit(doc._id, doc);
             }
         }
     }
