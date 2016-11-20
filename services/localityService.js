@@ -32,7 +32,7 @@ module.exports = {
             });
         },
 
-        report: function(id, callback) {
+        report: function(id, reason, callback) {
 
             let self = this;
 
@@ -48,12 +48,20 @@ module.exports = {
 
                         doc.reports++;
 
-                        if (doc.reports > 5)
-                            logger.info('Locality', id, 'reported more than 5 times!');
+                        if (doc.reports > 5) {
+                          logger.info('Locality', id, 'reported more than 5 times!');
 
-                        self.update(id, doc, function(succ) {
-                            callback(succ);
-                        });
+                          db.remove(id, function(err, res) {
+                              logger.info('Locality', id, 'deletion response:', res, 'error:', err);
+                              callback(!err ? true : false);
+                          });
+
+                        } else {
+                          self.update(id, doc, function(succ) {
+                              callback(succ);
+                          });
+                        }
+
                     });
                 },
 
@@ -72,7 +80,14 @@ module.exports = {
                             doc.rating = 0;
 
                         // If it's good or bad rating
-                        let ratingStatus = type > 0 ? 1 : -1;
+                        //let ratingStatus = type > 0 ? 1 : -1;
+                        let ratingStatus = parseInt(type);
+
+                        if (type > 2)
+                          ratingStatus = 2;
+
+                        if (type < -2)
+                          ratingStatus = -2;
 
                         doc.rating += ratingStatus;
 
@@ -98,7 +113,7 @@ module.exports = {
 
                     db.save(locality, (err, res) => {
                         logger.info('Create locality - response:', res, 'error:', err);
-                        callback(!err ? true : false);
+                        callback(!err ? res.id : false);
                     });
                 },
 

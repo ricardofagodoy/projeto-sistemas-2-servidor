@@ -11,9 +11,9 @@ module.exports = function(router) {
 
     // [GET] Reporting locality by id
     .get((req, res) => {
-        logger.info('Reporting locality id:', req.query.id);
+        logger.info('Reporting locality id:', req.query.id, ' with reason:', req.query.reason);
 
-        localityService.report(req.query.id, function(result) {
+        localityService.report(req.query.id, req.query.reason, function(result) {
 
             // Result FALSE, return error code
             if (!result)
